@@ -22,8 +22,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn({ signInRequest }) {
   const classes = useStyles();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    signInRequest({ email: e.target.email.value, password: e.target.password });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -32,7 +37,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleClick}>
           <TextField
             variant="outlined"
             margin="normal"

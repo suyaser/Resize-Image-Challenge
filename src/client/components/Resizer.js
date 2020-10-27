@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     padding: theme.spacing(4),
     textAlign: "center",
+    transition: "background-color 0.5s ease",
     "&:hover": {
       backgroundColor: blueGrey[50],
     },
@@ -33,11 +34,11 @@ export default function SignIn() {
       <Paper className={classes.paper}>
         <Grid container direction="column" spacing={2}>
           <Grid item>
-            <Typography variant="h4">Select Picture</Typography>
+            <Typography variant="h4">Resizer</Typography>
           </Grid>
           <Grid item>
             <Typography variant="h6">
-              Browse for an image on your computer below and press Continue
+              Browse for an image on your computer below
             </Typography>
           </Grid>
           <Grid item>
