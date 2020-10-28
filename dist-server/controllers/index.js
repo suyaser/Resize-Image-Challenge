@@ -11,8 +11,9 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 var _jsonpatch = _interopRequireDefault(require("jsonpatch"));
 
 exports.resize = async (req, res) => {
-  const imagePath = _path.default.join(__dirname, "../../public/images");
+  let imagePath = _path.default.join(__dirname, "../../build/images");
 
+  if (process.env.NODE_ENV == "development") imagePath = _path.default.join(__dirname, "../../public/images");
   const fileUpload = new _Resize.default(imagePath);
 
   if (!req.file) {
@@ -21,7 +22,6 @@ exports.resize = async (req, res) => {
     });
   }
 
-  console.log(req.file);
   const filename = await fileUpload.save(req.file.buffer);
   return res.status(200).json({
     name: filename
