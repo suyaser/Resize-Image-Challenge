@@ -8,6 +8,8 @@ var _Resize = _interopRequireDefault(require("../utils/Resize"));
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
+var _jsonpatch = _interopRequireDefault(require("jsonpatch"));
+
 exports.resize = async (req, res) => {
   const imagePath = _path.default.join(__dirname, "../../public/images");
 
@@ -45,4 +47,12 @@ exports.login = (req, res) => {
 
   res.cookie("authCookie", accessToken);
   res.send();
+};
+
+exports.patch = (req, res) => {
+  console.log(req.body);
+
+  const patchedDoc = _jsonpatch.default.apply_patch(req.body.obj, req.body.patchObj);
+
+  return res.status(200).json(patchedDoc);
 };

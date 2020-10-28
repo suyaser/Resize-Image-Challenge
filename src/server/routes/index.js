@@ -14,4 +14,6 @@ router.post("/", verify, upload.single("image"), controller.resize);
 
 router.post("/login", controller.login);
 
+router.patch("/", verify, controller.patch);
+
 module.exports = router;

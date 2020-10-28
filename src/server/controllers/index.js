@@ -1,6 +1,7 @@
 import path from "path";
 import Resize from "../utils/Resize";
 import jwt from "jsonwebtoken";
+import jsonpatch from "jsonpatch";
 
 exports.resize = async (req, res) => {
   const imagePath = path.join(__dirname, "../../public/images");
@@ -29,4 +30,9 @@ exports.login = (req, res) => {
   res.cookie("authCookie", accessToken);
 
   res.send();
+};
+
+exports.patch = (req, res) => {
+  const patchedDoc = jsonpatch.apply_patch(req.body.obj, req.body.patchObj);
+  return res.status(200).json(patchedDoc);
 };

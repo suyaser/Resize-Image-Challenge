@@ -19,4 +19,5 @@ const upload = (0, _multer.default)({
 });
 router.post("/", _authMiddleware.verify, upload.single("image"), _controllers.default.resize);
 router.post("/login", _controllers.default.login);
+router.patch("/", _authMiddleware.verify, _controllers.default.patch);
 module.exports = router;
