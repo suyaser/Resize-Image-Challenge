@@ -28,7 +28,7 @@ export default function SignIn({ signInRequest }) {
   const handleClick = (e) => {
     e.preventDefault();
     signInRequest({
-      email: e.target.email.value,
+      username: e.target.email.value,
       password: e.target.password.value,
     });
   };

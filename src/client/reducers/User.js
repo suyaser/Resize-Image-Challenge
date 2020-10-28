@@ -1,4 +1,4 @@
-import { SIGN_IN } from "../constants/ActionTypes";
+import { SIGN_IN, VALIDATE_USER } from "../constants/ActionTypes";
 
 export default function userReducer(
   state = {
@@ -12,7 +12,15 @@ export default function userReducer(
       if (!action.status) return state;
       else if (action.status === "success")
         return Object.assign({}, state, {
-          name: action.response.user.email,
+          name: action.response,
+          loggedIn: true,
+        });
+      return state;
+    case VALIDATE_USER:
+      if (!action.status) return state;
+      else if (action.status === "success")
+        return Object.assign({}, state, {
+          name: action.response,
           loggedIn: true,
         });
       return state;

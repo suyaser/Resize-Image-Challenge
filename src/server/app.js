@@ -1,17 +1,21 @@
 import createError from "http-errors";
 import express from "express";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import path from "path";
 import router from "./routes";
+require("dotenv").config();
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, "../build")));
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+app.use(cookieParser());
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));

@@ -6,6 +6,8 @@ var _path = _interopRequireDefault(require("path"));
 
 var _Resize = _interopRequireDefault(require("../utils/Resize"));
 
+var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
+
 exports.resize = async (req, res) => {
   const imagePath = _path.default.join(__dirname, "../../public/images");
 
@@ -22,4 +24,25 @@ exports.resize = async (req, res) => {
   return res.status(200).json({
     name: filename
   });
+};
+
+exports.login = (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+
+  if (!username || !password) {
+    return res.status(401).send();
+  }
+
+  let payload = {
+    username: username
+  };
+
+  let accessToken = _jsonwebtoken.default.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+    algorithm: "HS256",
+    expiresIn: process.env.ACCESS_TOKEN_LIFE
+  });
+
+  res.cookie("authCookie", accessToken);
+  res.send();
 };

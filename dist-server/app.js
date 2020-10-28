@@ -8,9 +8,13 @@ var _express = _interopRequireDefault(require("express"));
 
 var _bodyParser = _interopRequireDefault(require("body-parser"));
 
+var _cookieParser = _interopRequireDefault(require("cookie-parser"));
+
 var _path = _interopRequireDefault(require("path"));
 
 var _routes = _interopRequireDefault(require("./routes"));
+
+require("dotenv").config();
 
 const app = (0, _express.default)();
 app.use(_express.default.static(_path.default.join(__dirname, "../build"))); // parse application/x-www-form-urlencoded
@@ -20,6 +24,7 @@ app.use(_bodyParser.default.urlencoded({
 })); // parse application/json
 
 app.use(_bodyParser.default.json());
+app.use((0, _cookieParser.default)());
 app.get("/*", function (req, res) {
   res.sendFile(_path.default.join(__dirname, "build", "index.html"));
 });

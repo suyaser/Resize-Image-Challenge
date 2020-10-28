@@ -9,7 +9,6 @@ module.exports = {
   devServer: function (configFunction) {
     return function (proxy, allowedHost) {
       const config = configFunction(proxy, allowedHost);
-      console.log(config);
 
       config.watchOptions.ignored = [path.resolve(__dirname, "public/images/")];
 
