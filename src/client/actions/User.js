@@ -8,7 +8,13 @@ export const validateUserRequest = () => (dispatch) => {
   });
 
   const user = Cookies.get("authCookie");
-  if (user) dispatch(validateUserSuccess(user));
+  if (user)
+    axios
+      .get(`/api/user`)
+      .then((response) => {
+        dispatch(validateUserSuccess(response.data.username));
+      })
+      .catch((err) => dispatch(validateUserFailure("Invalid user!")));
   else dispatch(validateUserFailure("no user found!"));
 };
 
@@ -32,7 +38,6 @@ export const signInRequest = (user) => (dispatch) => {
   axios
     .post(`/api/login`, user)
     .then((response) => {
-      console.log(response);
       dispatch(signInSuccess(response.data));
     })
     .catch((err) => dispatch(signInFailure("Invalid login attempt!")));

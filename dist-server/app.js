@@ -25,10 +25,10 @@ app.use(_bodyParser.default.urlencoded({
 
 app.use(_bodyParser.default.json());
 app.use((0, _cookieParser.default)());
+app.use("/api", _routes.default);
 app.get("/*", function (req, res) {
   res.sendFile(_path.default.join(__dirname, "build", "index.html"));
 });
-app.use("/api", _routes.default);
 app.use(function (req, res, next) {
   next((0, _httpErrors.default)(404));
 });

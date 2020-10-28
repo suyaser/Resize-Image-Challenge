@@ -27,7 +27,9 @@ exports.login = (req, res) => {
     algorithm: "HS256",
     expiresIn: process.env.ACCESS_TOKEN_LIFE,
   });
-  res.cookie("authCookie", accessToken);
+  res.cookie("authCookie", accessToken, {
+    maxAge: process.env.ACCESS_TOKEN_LIFE,
+  });
 
   res.send();
 };
@@ -35,4 +37,9 @@ exports.login = (req, res) => {
 exports.patch = (req, res) => {
   const patchedDoc = jsonpatch.apply_patch(req.body.obj, req.body.patchObj);
   return res.status(200).json(patchedDoc);
+};
+
+exports.getUser = (req, res) => {
+  var decoded = jwt.decode(req.cookies.authCookie);
+  return res.status(200).json({ username: decoded.username });
 };

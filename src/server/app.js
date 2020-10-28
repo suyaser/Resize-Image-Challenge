@@ -17,11 +17,11 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
+app.use("/api", router);
+
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
-
-app.use("/api", router);
 
 app.use(function (req, res, next) {
   next(createError(404));

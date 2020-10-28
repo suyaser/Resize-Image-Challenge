@@ -17,6 +17,7 @@ const upload = (0, _multer.default)({
     fileSize: 4 * 1024 * 1024
   }
 });
+router.get("/user", _authMiddleware.verify, _controllers.default.getUser);
 router.post("/", _authMiddleware.verify, upload.single("image"), _controllers.default.resize);
 router.post("/login", _controllers.default.login);
 router.patch("/", _authMiddleware.verify, _controllers.default.patch);

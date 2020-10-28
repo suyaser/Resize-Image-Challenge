@@ -10,6 +10,8 @@ const upload = multer({
   },
 });
 
+router.get("/user", verify, controller.getUser);
+
 router.post("/", verify, upload.single("image"), controller.resize);
 
 router.post("/login", controller.login);
