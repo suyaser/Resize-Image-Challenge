@@ -6,4 +6,14 @@ module.exports = {
     paths.appSrc = path.resolve(__dirname, "src/client/");
     return paths;
   },
+  devServer: function (configFunction) {
+    return function (proxy, allowedHost) {
+      const config = configFunction(proxy, allowedHost);
+      console.log(config);
+
+      config.watchOptions.ignored = [path.resolve(__dirname, "public/images/")];
+
+      return config;
+    };
+  },
 };

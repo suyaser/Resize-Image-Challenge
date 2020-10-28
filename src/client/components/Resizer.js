@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Grid, Paper, Fab, Box } from "@material-ui/core";
+import { Grid, Paper, Fab, Box, CardMedia } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import blueGrey from "@material-ui/core/colors/blueGrey";
@@ -24,10 +24,23 @@ const useStyles = makeStyles((theme) => ({
   downloadButton: {
     float: "right",
   },
+  media: {
+    height: 100,
+    width: 100,
+    display: "inline-block",
+  },
 }));
 
-export default function SignIn() {
+export default function Resizer({ resizeRequest, img }) {
   const classes = useStyles();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    resizeRequest(formData);
+  };
 
   return (
     <Container maxWidth="md">
@@ -45,30 +58,39 @@ export default function SignIn() {
             <Paper className={classes.uploadPaper} component="label">
               <input
                 style={{ display: "none" }}
-                id="download-photo"
-                name="download-photo"
+                name="image"
                 type="file"
+                onInput={handleClick}
+                accept="image/*"
               />
-              <Box display="flex" alignItems="center" flexDirection="column">
-                <Avatar>
-                  <CloudUploadIcon />
-                </Avatar>
-                <Typography variant="h6" color="textSecondary">
-                  Click to upload
-                </Typography>
-              </Box>
+              {img ? (
+                <CardMedia className={classes.media} image={`/images/${img}`} />
+              ) : (
+                <Box display="flex" alignItems="center" flexDirection="column">
+                  <Avatar>
+                    <CloudUploadIcon />
+                  </Avatar>
+                  <Typography variant="h6" color="textSecondary">
+                    Select Image
+                  </Typography>
+                </Box>
+              )}
             </Paper>
           </Grid>
           <Grid item>
-            <Fab
-              disabled
-              variant="extended"
-              color="primary"
-              aria-label="add"
-              className={classes.downloadButton}
-            >
-              Download
-            </Fab>
+            {img && (
+              <Fab
+                variant="extended"
+                color="primary"
+                aria-label="add"
+                name="download"
+                href={`/images/${img}`}
+                download="ResizedImage_100x100.png"
+                className={classes.downloadButton}
+              >
+                Download
+              </Fab>
+            )}
           </Grid>
         </Grid>
       </Paper>

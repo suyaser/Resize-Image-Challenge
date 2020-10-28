@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
 import Toolbar from "./Toolbar";
-import Resizer from "./Resizer";
+import Resizer from "../containers/Resizer";
 import React from "react";
 
 export default function Main() {

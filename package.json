@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/runtime": "^7.12.1",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@reduxjs/toolkit": "^1.4.0",
@@ -15,27 +19,41 @@
     "fontsource-roboto": "^3.0.3",
     "http-errors": "^1.8.0",
     "multer": "^1.4.2",
+    "npm-run-all": "^4.1.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.0",
     "redux-thunk": "^2.3.0",
+    "rimraf": "^3.0.2",
     "sharp": "^0.26.2",
     "uuid": "^8.3.1"
   },
   "scripts": {
-    "predev-server": "npm run build",
-    "dev-server": "SET NODE_ENV=development & nodemon server.js",
+    "server": "node ./dist-server/app.js",
     "dev-client": "react-app-rewired start",
+    "dev-server": "NODE_ENV=development npm-run-all build server",
     "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
-    "start": "SET NODE_ENV=production & node server.js",
-    "prestart": "npm run build",
-    "build": "react-app-rewired build",
+    "start": "NODE_ENV=production npm-run-all build server",
+    "transpile": "babel ./src/server --out-dir dist-server",
+    "clean": "rimraf dist-server build",
+    "build": "npm-run-all clean transpile build-client",
+    "build-client": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      [
+        "@babel/transform-runtime"
+      ]
+    ]
   },
   "browserslist": {
     "production": [
@@ -51,7 +69,9 @@
   },
   "proxy": "http://localhost:8080",
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.12.1",
     "concurrently": "^5.3.0",
+    "eslint-config-prettier": "^6.15.0",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
     "react-app-rewired": "^2.1.6"

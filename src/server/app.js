@@ -1,10 +1,11 @@
-const createError = require("http-errors");
-const express = require("express");
-const bodyParser = require("body-parser");
-const path = require("path");
+import createError from "http-errors";
+import express from "express";
+import bodyParser from "body-parser";
+import path from "path";
+import router from "./routes";
 const app = express();
 
-app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "../build")));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,6 +16,8 @@ app.use(bodyParser.json());
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
+
+app.use("/api", router);
 
 app.use(function (req, res, next) {
   next(createError(404));

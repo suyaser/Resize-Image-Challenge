@@ -6,4 +6,8 @@ const mapDispatchToProps = (dispatch) => ({
   signInRequest: (user) => dispatch(signInRequest(user)),
 });
 
-export default connect(() => {}, mapDispatchToProps)(SignIn);
+const mapStateToProps = () => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
