@@ -1,5 +1,7 @@
 Image Thumbnail creator.
 
+![Alt Text](./preview.gif)
+
 ## Available Scripts
 
 In the project directory, you can run:
